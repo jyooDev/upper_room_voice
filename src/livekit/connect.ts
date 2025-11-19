@@ -6,16 +6,13 @@ import {
   RoomEvent,
   dispose,
 } from "@livekit/rtc-node";
-import dotenv from "dotenv";
+import config from "../config/config";
 
-dotenv.config();
+export async function startLiveKit(roomName: string, token: string) {
+  const url = config.livekitUri;
 
-export async function startLiveKit() {
-  const url = process.env.LIVEKIT_URL;
-  const token = process.env.LIVEKIT_TOKEN;
-
-  if (!url || !token) {
-    throw new Error("LIVEKIT_URL or LIVEKIT_TOKEN is missing in .env");
+  if (!url) {
+    throw new Error("LIVEKIT_URL is missing in .env");
   }
 
   console.log("Connecting to LiveKit…");
@@ -26,15 +23,33 @@ export async function startLiveKit() {
     console.log(`LiveKit State: ${state}`);
   });
 
-  room.on(RoomEvent.TrackSubscribed, handleTrackSubscribed);
+  room.on(
+    RoomEvent.TrackSubscribed,
+    (
+      track: RemoteTrack,
+      publication: RemoteTrackPublication,
+      participant: RemoteParticipant
+    ) => {
+      handleTrackSubscribed(track, publication, participant);
+    }
+  );
   room.on(RoomEvent.Disconnected, handleDisconnected);
 
   await room.connect(url, token, {
     autoSubscribe: true,
     dynacast: true,
   });
+
+  process.on("SIGINT", async () => {
+    await room.disconnect();
+    await dispose();
+  });
 }
 
-function handleTrackSubscribed() {}
+function handleTrackSubscribed(
+  track: RemoteTrack,
+  publication: RemoteTrackPublication,
+  participant: RemoteParticipant
+) {}
 
 function handleDisconnected() {}
