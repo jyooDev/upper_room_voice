@@ -1,11 +1,9 @@
 import { AccessToken } from "livekit-server-sdk";
-import dotenv from "dotenv";
-
-dotenv.config();
+import config from "../config/config";
 
 export function generateLivekitToken(roomName: string, identity: string) {
-  const apiKey = process.env.LIVEKIT_API_KEY!;
-  const apiSecret = process.env.LIVEKIT_API_SECRET!;
+  const apiKey = config.livekitApikey;
+  const apiSecret = config.livekitSecret;
 
   const at = new AccessToken(apiKey, apiSecret, {
     identity,
