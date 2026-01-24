@@ -25,8 +25,8 @@ const config: IConfig = {
       : process.env.PROD_LIVEKIT_API_SECRET) || "secret",
   livekitUri:
     (process.env.LIVEKIT_ENV === "development"
-      ? process.env.DEV_LIVEKIT_URI
-      : process.env.PROD_LIVEKIT_URI) || "",
+      ? process.env.DEV_LIVEKIT_URL
+      : process.env.PROD_LIVEKIT_URL) || "",
   voiceServerIdentity: process.env.VOICE_SERVER_IDENTITY || "voice-server",
 };
 

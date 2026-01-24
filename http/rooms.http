@@ -1,7 +1,11 @@
 ### POST /voice-api/v1/room/join
-POST http://localhost:4000/voice-api/v1/room/join
+POST http://localhost:4000/voice-api/v1/rooms/start-room
 Content-Type: application/json
 
 {
-  "roomName": "testroom",
+  "roomName": "testroom"
 }
+
+
+###  200 OK
+GET http://localhost:4000/ping

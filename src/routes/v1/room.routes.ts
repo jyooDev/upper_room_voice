@@ -4,6 +4,6 @@ const router = Router();
 
 const roomController = new RoomController();
 
-router.post("/join-room", roomController.joinRoom);
+router.post("/start-room", roomController.startRoom);
 
 export default router;
