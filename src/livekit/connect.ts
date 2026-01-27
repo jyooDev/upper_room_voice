@@ -28,10 +28,10 @@ export async function startLiveKit(roomName: string, token: string) {
     (
       track: RemoteTrack,
       publication: RemoteTrackPublication,
-      participant: RemoteParticipant
+      participant: RemoteParticipant,
     ) => {
       handleTrackSubscribed(track, publication, participant);
-    }
+    },
   );
   room.on(RoomEvent.Disconnected, handleDisconnected);
 
@@ -49,7 +49,7 @@ export async function startLiveKit(roomName: string, token: string) {
 function handleTrackSubscribed(
   track: RemoteTrack,
   publication: RemoteTrackPublication,
-  participant: RemoteParticipant
+  participant: RemoteParticipant,
 ) {}
 
 function handleDisconnected() {}
