@@ -1,18 +1,33 @@
 import { AccessToken } from "livekit-server-sdk";
 import config from "../config/config";
 
-export function generateLivekitToken(roomName: string, identity: string) {
-  const apiKey = config.livekitApikey;
-  const apiSecret = config.livekitSecret;
+interface LivekitTokenOptions {
+  roomName: string;
+  identity: string;
+  canPublish?: boolean;
+  canSubscribe?: boolean;
+  ttl?: string;
+}
 
-  const at = new AccessToken(apiKey, apiSecret, {
+export function generateLivekitToken({
+  roomName,
+  identity,
+  canPublish = false,
+  canSubscribe = true,
+  ttl = "15m",
+}: LivekitTokenOptions) {
+  const at = new AccessToken(config.livekitApikey, config.livekitSecret, {
     identity,
   });
 
   at.addGrant({
     room: roomName,
     roomJoin: true,
+    canPublish,
+    canSubscribe,
   });
+
+  at.ttl = ttl;
 
   return at.toJwt();
 }
