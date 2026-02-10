@@ -46,14 +46,17 @@ class RoomController {
 
     try {
       const roomName = roomNameForSermon(sermonId);
-      const token = generateLivekitToken({
+      const token = await generateLivekitToken({
         roomName,
         identity: user.uid,
         canPublish: true,
         canSubscribe: true,
       });
 
-      logger.debug("Join info for host:", { roomName, identity: user.uid });
+      logger.debug("Join info for host:", {
+        roomName,
+        identity: user.uid,
+      });
 
       return res.json({
         roomName,
@@ -85,7 +88,9 @@ class RoomController {
     try {
       const live = await isSermonLive(sermonId);
       if (!live) {
-        return res.status(404).json({ message: "sermon not found or not live" });
+        return res
+          .status(404)
+          .json({ message: "sermon not found or not live" });
       }
 
       const roomName = roomNameForSermon(sermonId);
@@ -96,7 +101,10 @@ class RoomController {
         canSubscribe: true,
       });
 
-      logger.debug("Join info for participant:", { roomName, identity: user.uid });
+      logger.debug("Join info for participant:", {
+        roomName,
+        identity: user.uid,
+      });
 
       return res.json({
         roomName,
