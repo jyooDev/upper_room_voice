@@ -9,6 +9,7 @@ interface IConfig {
   livekitSecret: string;
   livekitUri: string;
   voiceServerIdentity: string;
+  backendUrl: string;
 }
 
 const config: IConfig = {
@@ -28,6 +29,7 @@ const config: IConfig = {
       ? process.env.DEV_LIVEKIT_URL
       : process.env.PROD_LIVEKIT_URL) || "",
   voiceServerIdentity: process.env.VOICE_SERVER_IDENTITY || "voice-server",
+  backendUrl: process.env.BACKEND_URL || "http://localhost:8888",
 };
 
 export default config;
