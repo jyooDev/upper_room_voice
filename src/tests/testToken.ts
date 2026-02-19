@@ -3,7 +3,7 @@ const room = "test-room";
 const identity = "voice-server";
 
 async function main() {
-  const token = await generateLivekitToken(room, identity);
+  const token = await generateLivekitToken({ roomName: room, identity });
   console.log("Generated Token:\n", token);
 }
 
